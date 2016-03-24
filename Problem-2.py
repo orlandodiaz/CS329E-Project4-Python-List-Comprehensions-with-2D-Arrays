@@ -42,49 +42,50 @@ s_dept = (('ID', 'NAME', 'REGION_ID'),
 
 
 
-# select * from s_dept;
+#1.  select * from s_dept;
 
-print "\nselect * from s_dept:", s_emp[1::] 
+print "\n1. select * from s_dept:", s_emp[1::] 
 
-# select last_name, first_name, title, salary from s_emp;
+#2.  select last_name, first_name, title, salary from s_emp;
 
-print "\nselect last_name, first_name, title, salary from s_emp:", \
+print "\n2. select last_name, first_name, title, salary from s_emp:", \
 [  [  i[1], i[2], i[6], i[7]  ] for i in s_emp[1::]  ]
 
 
-# select last_name, first_name, title, salary from s_emp where salary > 1500 and s_dept_id > 40;
+#3. select last_name, first_name, title, salary from s_emp where salary > 1500 and s_dept_id > 40;
 
-print "\nselect last_name, first_name, title, salary from s_emp where salary > 1500 and s_dept_id > 40:", \
+print "\n3. select last_name, first_name, title, salary from s_emp where salary > 1500 and s_dept_id > 40:", \
 [  [  i[1], i[2], i[6], i[7]  ] for i in s_emp[1::] if i[7] > 1500 and i[9] > 40 ]
 
 
 
-# select last_name, first_name, title, salary from s_emp where salary > 1500 and s_dept_id > 40 order by last_name;
+#4. select last_name, first_name, title, salary from s_emp where salary > 1500 and s_dept_id > 40 order by last_name;
 
-print "\nselect last_name, first_name, title, salary from s_emp where salary > 1500 and s_dept_id > 40 order by last_name:", \
+print "\n4. select last_name, first_name, title, salary from s_emp where salary > 1500 and s_dept_id > 40 order by last_name:", \
 sorted ( [  [  i[1], i[2], i[6], i[7]  ] for i in s_emp[1::] if i[7] > 1500 and i[9] > 40], key = lambda x: x[0])
 
 
 
-# select last_name, first_name, title, salary from s_emp where salary > 1500 and s_dept_id > 40 order by salary desc;
+#5. select last_name, first_name, title, salary from s_emp where salary > 1500 and s_dept_id > 40 order by salary desc;
 
-print "\nselect last_name, first_name, title, salary from s_emp where salary > 1500 and s_dept_id > 40 order by salary desc:", \
+print "\n5. select last_name, first_name, title, salary from s_emp where salary > 1500 and s_dept_id > 40 order by salary desc:", \
 sorted ( [  [  i[1], i[2], i[6], i[7]  ] for i in s_emp[1::] if i[7] > 1500 and i[9] > 40], key = lambda x: x[3])
 
 
-# select last_name, first_name, title, salary, name from s_emp e join s_dept d on(e.s_dept_id = d.id);
+#6. select last_name, first_name, title, salary, name from s_emp e join s_dept d on(e.dept_id = d.id);
 
-print "\nselect last_name, first_name, title, salary, name from s_emp e join s_dept d on(e.s_dept_id = d.id):",
-
-[ [ i[1], i[2], i[6], i[7], j[1] ] for i in s_emp[1::] for j in s_dept[1::] ]
+print "\n6. select last_name, first_name, title, salary, name from s_emp e join s_dept d on(e.dept_id = d.id):",[ [ i[1], i[2], i[6], i[7], j[1] ] for i in s_emp[1::] for j in s_dept[1::] if i[9] == j[0] ]
 
 
-# select s_dept_id, avg(salary) from s_emp group by s_dept_id order by s_dept_id;
+#7. select s_dept_id, avg(salary) from s_emp group by s_dept_id order by s_dept_id;
+
+
+print "\n7. select s_dept_id, avg(salary) from s_emp group by s_dept_id order by s_dept_id;", \
 
 for department in { d[9] for d in s_emp[1::] }: print (lambda s_deptID, avgSal: (s_deptID, avgSal))(department, (lambda l: round(sum(l) / len(l), 2))(map(float,[ e[7] for e in s_emp[1::] if e[9] == department ])))
 
-# select s_dept_id, avg(salary) from s_emp group by s_dept_id having avg(salary) < 1500;
+#8. select s_dept_id, avg(salary) from s_emp group by s_dept_id having avg(salary) < 1500;
       
-print "\nselect s_dept_id, avg(salary) from s_emp group by s_dept_id having avg(salary) < 1500:", 
+print "\n8. select s_dept_id, avg(salary) from s_emp group by s_dept_id having avg(salary) < 1500:", \
 
 for department in { d[9] for d in s_emp[1::] }: print (lambda s_deptID, avgSal: (s_deptID, avgSal) if avgSal > 1500 else '')(department, (lambda l: round(sum(l) / len(l), 2))(map(float,[ e[7] for e in s_emp[1::] if e[9] == department ])))
