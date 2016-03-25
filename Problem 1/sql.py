@@ -81,13 +81,12 @@ print "\n6. select last_name, first_name, title, salary, name from s_emp e join 
 #7. select deptID, avg(salary) from s_emp group by deptID order by deptID;
 
 
-print "\n7. select deptID, avg(salary) from s_emp group by deptID order by deptID;\n\n", \
-
-for department in { d[9] for d in s_emp[1::] }: print (department, (lambda l: round(sum(l) / len(l), 2))(map(float,[ e[7] for e in s_emp[1::] if e[9] == department ])))
+print "\n7. select deptID, avg(salary) from s_emp group by deptID order by deptID;\n\n"
+for department in sorted({ d[9] for d in s_emp[1::] }, key = lambda x: x): print (department, (lambda l: round(sum(l) / len(l), 2))(map(float,[ e[7] for e in s_emp[1::] if e[9] == department ])))
 
 
 #8. select deptID, avg(salary) from s_emp group by deptID having avg(salary) < 1500;
       
 print "\n8. select deptID, avg(salary) from s_emp group by deptID having avg(salary) < 1500:\n\n", \
 
-for department in { d[9] for d in s_emp[1::] }: print (lambda deptID, avgSal: (deptID, avgSal) if avgSal > 1500 else '')(department, (lambda l: round(sum(l) / len(l), 2))(map(float,[ e[7] for e in s_emp[1::] if e[9] == department ])))
+for department in { d[9] for d in s_emp[1::] }: print (lambda deptID, avgSal: (deptID, avgSal) if avgSal < 1500 else '')(department, (lambda l: round(sum(l) / len(l), 2))(map(float,[ e[7] for e in s_emp[1::] if e[9] == department ])))
