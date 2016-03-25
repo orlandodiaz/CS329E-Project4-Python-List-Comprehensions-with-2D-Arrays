@@ -11,9 +11,11 @@ var list = function() {
         }
 
         var l = {
+            count: 0,
             length: 0,
             currentNode: null,
             head: new Node(null),
+            current:null,
             add: function(e) {
                 if (l.currentNode === null) { // This is true the first time
                     l.head.data = e;
@@ -69,47 +71,60 @@ var list = function() {
                 }
             }
         }
+        f.iterate =function(){
+            var n = l.current;
+            function nextone(){
+                if (n == null){
+                    l.count += 1;
+
+                    var currentdata = l.head.data;
+
+                    l.current = l.head.next;
+
+                    return currentdata;
+                }
+                else if (l.count < l.length)   {
+                    l.count += 1;
+                    var current = n.data;
+                    n = n.next;
+                    l.current = n;
+
+                    return current;
+                }
+                else {
+                    return null;
+                }
+            };
+            return nextone();
+        };
 
         return f;
     }();
     return list;
 };
 
+
 var l1 = new list();
-l1.concat('a')
+l1.cons('a')
 l1.cons('b')
-document.writeln("l1: " + l1.first() + "<BR>");
-document.writeln("l1: " + l1.length() + "<BR>");
-
-var l2 = new list();
-l2.cons('c')
-document.writeln("<BR>l2: " + l2.car() + "<BR>");
-document.writeln("l2: " + l2.length() + "<BR>");
-
-var l3 = new list();
-var l4 = new list();
-l3.cons('x')
-l3.cons('y')
-l3.cons('z')
-l4.cons(l3);
-l4.cons(l3.car());
-
-document.writeln("<BR>l3: " + l3.car());
-while(l3.length() > 0) {
-    document.writeln(", " + l3.cdr().car());
-}
-
-var h = l4.run('head');
-document.writeln("<BR>l4: " + h.data);
-for(var i = 1; i < l4.length(); i++) {
+l1.cons('c')
+var h = l1.run('head');
+document.writeln("<br>l1 list: " + h.data);
+for(var i = 1; i < l1.length(); i++) {
     h = h.next;
     document.writeln(", " + h.data);
 }
-
-l4.map(function(x){return x+x})
-var h = l4.run('head');
-document.writeln("<BR>l4: " + h.data);
-for(var i = 1; i < l4.length(); i++) {
+document.writeln("<br>l1 iterator: " + l1.iterate())
+document.writeln("<br>l1 iterator: " + l1.iterate())
+document.writeln("<br>l1 iterator: " + l1.iterate())
+document.writeln("<br>l1 iterator: " + l1.iterate())
+l1.cons("d")
+var h = l1.run('head');
+document.writeln("<br>l1 new list: " + h.data);
+for(var i = 1; i < l1.length(); i++) {
     h = h.next;
     document.writeln(", " + h.data);
 }
+document.writeln("<br>l1 iterator: " + l1.iterate())
+document.writeln("<br>l1 iterator: " + l1.iterate())
+
