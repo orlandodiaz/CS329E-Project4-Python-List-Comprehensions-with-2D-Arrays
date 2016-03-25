@@ -50,14 +50,12 @@ print "\n1. select * from s_dept:", s_dept[1::]
 #2.  select last_name, first_name, title, salary from s_emp;
 
 print "\n2. select last_name, first_name, title, salary from s_emp:\n\n", \
-      
 [  [  i[1], i[2], i[6], i[7]  ] for i in s_emp[1::]  ]
 
 
 #3. select last_name, first_name, title, salary from s_emp where salary > 1500 and deptID > 40;
 
 print "\n3. select last_name, first_name, title, salary from s_emp where salary > 1500 and deptID > 40:\n\n", \
-      
 [  [  i[1], i[2], i[6], i[7]  ] for i in s_emp[1::] if i[7] > 1500 and i[9] > 40 ]
 
 
@@ -65,7 +63,6 @@ print "\n3. select last_name, first_name, title, salary from s_emp where salary 
 #4. select last_name, first_name, title, salary from s_emp where salary > 1500 and deptID > 40 order by last_name;
 
 print "\n4. select last_name, first_name, title, salary from s_emp where salary > 1500 and deptID > 40 order by last_name:\n\n", \
-      
 sorted ( [  [  i[1], i[2], i[6], i[7]  ] for i in s_emp[1::] if i[7] > 1500 and i[9] > 40], key = lambda x: x[0], )
 
 
@@ -73,7 +70,6 @@ sorted ( [  [  i[1], i[2], i[6], i[7]  ] for i in s_emp[1::] if i[7] > 1500 and 
 #5. select last_name, first_name, title, salary from s_emp where salary > 1500 and deptID > 40 order by salary desc;
 
 print "\n5. select last_name, first_name, title, salary from s_emp where salary > 1500 and deptID > 40 order by salary desc:\n\n", \
-      
 sorted ( [  [  i[1], i[2], i[6], i[7]  ] for i in s_emp[1::] if i[7] > 1500 and i[9] > 40], key = lambda x: x[3], reverse=True )
 
 
